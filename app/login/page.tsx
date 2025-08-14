@@ -3,32 +3,37 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Eye, EyeOff, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { LOGIN_SCHEMAS } from "@/constants/schemas";
+import { saveAPIToken } from "@/utils/manageAPIToken";
+import { useRouter } from "next/navigation";
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
     resolver: yupResolver(LOGIN_SCHEMAS),
     mode: "onChange",
     defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false
+      api_token: ""
     }
   });
 
-  const onSubmit = async data => {
+  const onSubmit = async (data: { api_token: string }) => {
     setIsSubmitting(true);
     try {
-      console.log("Login attempted:", data);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve =>
+        setTimeout(e => {
+          console.log("data", data?.api_token);
+          saveAPIToken(data.api_token);
+          resolve(e);
+        }, 1000)
+      );
+      router.push("/");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
@@ -39,7 +44,6 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <div className="bg-primary p-3 rounded-xl">
@@ -54,7 +58,7 @@ const LoginPage = () => {
         <Card className="shadow-lg">
           <CardHeader className="space-y-1">
             <CardTitle className="text-xl">Welcome back</CardTitle>
-            <p className="text-sm text-muted-foreground">Enter your credentials to access your account</p>
+            <p className="text-sm text-muted-foreground">Enter your Api token to continue</p>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -62,68 +66,17 @@ const LoginPage = () => {
                 {/* Email Field */}
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="api_token"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email Address</FormLabel>
+                      <FormLabel>API token</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="admin@company.com" {...field} />
+                        <Input type="text" placeholder="API token" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
-                {/* Password Field */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" {...field} />
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? (
-                              <EyeOff className="h-4 w-4 text-muted-foreground" />
-                            ) : (
-                              <Eye className="h-4 w-4 text-muted-foreground" />
-                            )}
-                          </Button>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Remember Me & Forgot Password */}
-                <div className="flex items-center justify-between">
-                  <FormField
-                    control={form.control}
-                    name="rememberMe"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel className="text-sm font-normal">Remember me</FormLabel>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="button" variant="link" className="px-0 font-normal text-sm">
-                    Forgot password?
-                  </Button>
-                </div>
 
                 {/* Submit Button */}
                 <Button type="submit" className="w-full" disabled={!form.formState.isValid || isSubmitting}>
