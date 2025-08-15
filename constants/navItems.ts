@@ -1,15 +1,15 @@
 import { INavSection } from "@/interfaces/componentInterfaces";
-import { Frame } from "lucide-react";
+import { Users, Briefcase, Coins, Signature, FileCheck } from "lucide-react";
 
 export const NAV_ITEMS: INavSection[] = [
   {
     title: "",
     items: [
-      { title: "Users Management", icon: Frame, navigation: "users" },
-      { title: "Client Management", icon: Frame, navigation: "clients" },
-      { title: "Tokens Management", icon: Frame, navigation: "tokens" },
-      { title: "Sign Management", icon: Frame, navigation: "sign" },
-      { title: "PDF Verification", icon: Frame, navigation: "verification" }
+      { title: "Users Management", icon: Users, navigation: "users" },
+      { title: "Client Management", icon: Briefcase, navigation: "clients" },
+      { title: "Tokens Management", icon: Coins, navigation: "tokens" },
+      { title: "Sign Management", icon: Signature, navigation: "sign" },
+      { title: "PDF Verification", icon: FileCheck, navigation: "verification" }
     ]
   }
 ];

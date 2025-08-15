@@ -36,7 +36,7 @@ export default function NavMain() {
                     onClick={() => handleNavigation(navigation)}
                     className={cn(
                       "h-16 transition-colors duration-300 ease-in-out", // smooth animation
-                      isCurrentRoute ? "bg-blue-900 hover:bg-blue-800" : "bg-gray-300 hover:bg-gray-200"
+                      isCurrentRoute ? "bg-blue-900 hover:bg-blue-800" : " bg-gray-300 hover:bg-gray-100"
                     )}
                   >
                     {Icon && <Icon color={isCurrentRoute ? "white" : "black"} />}

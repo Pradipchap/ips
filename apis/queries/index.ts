@@ -1,4 +1,4 @@
-import { GET_USERS_ENDPOINT, GET_USERS_KEY } from "@/constants/endpoints";
+import { GET_USERS_KEY } from "@/constants/endpoints";
 import { IUserListResponse } from "@/interfaces/queryInterfaces";
 import { useQuery } from "@tanstack/react-query";
 
@@ -11,16 +11,11 @@ interface IPaginatedQueryProps {
 export const useGetUsers = ({ page = 1, limit = 10, search = "" }: IPaginatedQueryProps = {}) => {
   const getUsers = async (): Promise<IUserListResponse> => {
     try {
-      const response = await fetch(GET_USERS_ENDPOINT, {
-        headers: {
-          Authorization: "Token 9ca681a6-7122-4bf1-861f-235ce873ac8b"
-        }
-      });
+      const response = await fetch(`/api/users?page=${page}&limit=${limit}&search=${search}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch users: ${response.status} ${response.statusText}`);
       }
       const data: IUserListResponse = await response.json();
-
       return data;
     } catch (error) {
       console.error("Error fetching users:", error);
