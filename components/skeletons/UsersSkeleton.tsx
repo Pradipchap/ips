@@ -31,25 +31,29 @@ const UserCardSkeleton = () => (
   </Card>
 );
 
-const TableRowSkeleton = () => (
-  <TableRow>
-    <TableCell>
-      <div className="flex items-center space-x-3">
-        <Skeleton className="h-8 w-8 rounded-full" />
-        <Skeleton className="h-4 w-[100px]" />
-      </div>
+export const TableRowSkeleton = () => (
+  <TableRow className="h-[56px]">
+    {" "}
+    {/* Match data row height */}
+    {/* ID */}
+    <TableCell className="py-3 text-base">
+      <Skeleton className="h-5 w-12" /> {/* Similar to short number */}
     </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-[150px]" />
+    {/* Username */}
+    <TableCell className="py-3 text-base">
+      <Skeleton className="h-5 w-[140px]" /> {/* Average username length */}
     </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-[120px]" />
+    {/* Full Name */}
+    <TableCell className="py-3 text-base">
+      <Skeleton className="h-5 w-[180px]" />
     </TableCell>
-    <TableCell>
-      <Skeleton className="h-6 w-[70px]" />
+    {/* Email */}
+    <TableCell className="py-3 text-base">
+      <Skeleton className="h-5 w-[220px]" />
     </TableCell>
-    <TableCell>
-      <Skeleton className="h-8 w-[60px]" />
+    {/* Actions */}
+    <TableCell className="py-3 text-base">
+      <Skeleton className="h-8 w-[80px] rounded-md" />
     </TableCell>
   </TableRow>
 );

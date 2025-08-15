@@ -3,14 +3,13 @@
 import { usePathname, useRouter } from "next/navigation";
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { NAV_ITEMS } from "@/constants/navItems";
-import { cn } from "@/lib/utils"; // ShadCN utility for conditional classNames
+import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
 export default function NavMain() {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Extract first path segment once, not on every render in map
   const activeSegment = useMemo(() => pathname.split("/")[1] || "", [pathname]);
 
   const handleNavigation = (route: string) => {
@@ -35,8 +34,8 @@ export default function NavMain() {
                     tooltip={title}
                     onClick={() => handleNavigation(navigation)}
                     className={cn(
-                      "h-16 transition-colors duration-300 ease-in-out", // smooth animation
-                      isCurrentRoute ? "bg-blue-900 hover:bg-blue-800" : " bg-gray-300 hover:bg-gray-100"
+                      "h-16 transition-colors duration-300 ease-in-out px-5", // smooth animation
+                      isCurrentRoute ? "bg-blue-900 hover:bg-blue-800" : " bg-gray-200 hover:bg-gray-100"
                     )}
                   >
                     {Icon && <Icon color={isCurrentRoute ? "white" : "black"} />}
